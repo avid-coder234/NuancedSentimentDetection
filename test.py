@@ -110,3 +110,4 @@ occurrences_yes = (predictions_data['predicted_sarcasm_tag'] == 'yes').sum()
 occurrences_no = (predictions_data['predicted_sarcasm_tag'] == 'no').sum()
 print("Occurrences of 'yes' in the predicted_sarcasm_tag column:", occurrences_yes)
 print("Occurrences of 'no' in the predicted_sarcasm_tag column:", occurrences_no)
+

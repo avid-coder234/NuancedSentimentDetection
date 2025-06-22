@@ -1,3 +1,5 @@
+train.py
+
 import pandas as pd
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -106,3 +108,4 @@ print("Training Classification Report:\n", classification_report(y, y_pred))
 # Save the model and vectorizer for later use
 joblib.dump(easy_ensemble, 'model_zero.pkl')
 joblib.dump(lexical_vectorizer, 'tfidf_vectorizer.pkl')
+
