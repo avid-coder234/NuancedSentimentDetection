@@ -24,6 +24,11 @@ from sklearn.metrics import classification_report
 st.sidebar.info(f"🔍 scikit-learn version: {sklearn.__version__}")
 st.sidebar.info(f"📦 NLTK version: {nltk.__version__}")
 
+try:
+    nltk.data.find("tokenizers/punkt")
+except LookupError:
+    nltk.download("punkt")
+
 # === Check for model and vectorizer files ===
 MODEL_PATH = 'model_zero.pkl'
 VECTORIZER_PATH = 'tfidf_vectorizer.pkl'
