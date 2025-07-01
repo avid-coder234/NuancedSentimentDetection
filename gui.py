@@ -5,8 +5,8 @@ import os
 import joblib
 import nltk
 import sklearn
-
 # === Download necessary NLTK data ===
+nltk.download('punkt')
 nltk.download('vader_lexicon')
 nltk.download('stopwords')
 nltk.download('punkt')
