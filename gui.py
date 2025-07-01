@@ -1,25 +1,51 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-from sklearn.feature_extraction.text import TfidfVectorizer
-from nltk.tokenize import word_tokenize
-from nltk.corpus import stopwords, sentiwordnet as swn, wordnet as wn
-from nltk.sentiment.vader import SentimentIntensityAnalyzer
+import os
 import joblib
 import nltk
-import re
-from sklearn.metrics import classification_report
+import sklearn
 
-# Load the trained model and vectorizer
-model = joblib.load('model_zero.pkl')
-vectorizer = joblib.load('tfidf_vectorizer.pkl')
-
-# Download necessary NLTK data
+# === Download necessary NLTK data ===
 nltk.download('vader_lexicon')
 nltk.download('stopwords')
 nltk.download('punkt')
 nltk.download('sentiwordnet')
 nltk.download('wordnet')
+
+from sklearn.feature_extraction.text import TfidfVectorizer
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords, sentiwordnet as swn, wordnet as wn
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+import re
+from sklearn.metrics import classification_report
+
+# === Version Logging ===
+st.sidebar.info(f"🔍 scikit-learn version: {sklearn.__version__}")
+st.sidebar.info(f"📦 NLTK version: {nltk.__version__}")
+
+# === Check for model and vectorizer files ===
+MODEL_PATH = 'model_zero.pkl'
+VECTORIZER_PATH = 'tfidf_vectorizer.pkl'
+
+if not os.path.exists(MODEL_PATH) or not os.path.exists(VECTORIZER_PATH):
+    st.error(f"""
+    🚫 Required files not found:
+    - {'✅' if os.path.exists(MODEL_PATH) else '❌ model_zero.pkl'}
+    - {'✅' if os.path.exists(VECTORIZER_PATH) else '❌ tfidf_vectorizer.pkl'}
+
+    Please ensure both files are present in the same directory.
+    """)
+    st.stop()
+
+# === Load model and vectorizer ===
+try:
+    model = joblib.load(MODEL_PATH)
+    vectorizer = joblib.load(VECTORIZER_PATH)
+except Exception as e:
+    st.error(f"⚠️ Error loading model/vectorizer: {str(e)}")
+    st.stop()
+
 
 # Initialize stop words and sentiment analyzer
 stop_words = set(stopwords.words('english'))
